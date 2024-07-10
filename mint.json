@@ -56,17 +56,12 @@
         "group": "Item Pages",
         "icon": "list",
         "pages": [
-          {
-            "group": "Food",
-            "icon": "pot-food",
-            "pages": [
-              "items/berries",
-              "items/cooked_fish",
-              "items/fruits",
-              "items/mushrooms",
-              "items/vegetables"
-            ]
-          }
+          "items/food",
+          "items/berries",
+          "items/cooked_fish",
+          "items/fruits",
+          "items/mushrooms",
+          "items/vegetables"
         ]
       }
     ]
