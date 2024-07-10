@@ -53,35 +53,20 @@
       "group": "Items",
       "pages": ["items/items",
       {
-        "group": "Item List",
+        "group": "Item Pages",
         "icon": "list",
         "pages": [
-	  "items/berries",
-          "items/fence_gate",
-          "items/assault_rifle",
-          "items/cloudberries",
-          "items/research_tent",
-          "items/wood",
-          "items/container",
-          "items/chainsaw",
-          "items/ammo_100",
-          "items/satellite_communicator",
-          "items/fishing_rod",
-          "items/perch",
-          "items/cooked_perch",
-          "items/pike",
-          "items/cooked_pike",
-          "items/trout",
-          "items/cooked_trout",
-          "items/rainbow_trout",
-          "items/cooked_rainbow_trout",
-          "items/wood_and_matches",
-          "items/mezereons",
-          "items/sign",
-          "items/fireplace",
-          "items/raspberries",
-          "items/blackberries",
-          "items/seeds_cloudberry_bush"
+          {
+            "group": "Food",
+            "icon": "pot-food",
+            "pages": [
+              "items/berries",
+              "items/cooked_fish",
+              "items/fruits",
+              "items/mushrooms",
+              "items/vegetables"
+            ]
+          }
         ]
       }
     ]
