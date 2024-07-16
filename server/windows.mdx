@@ -37,12 +37,13 @@ icon: 'windows'
 
     <Step title="Configure Port-forwarding and Firewalls" icon="block-brick-fire">
 
-    <Warning>**Warning:** In other tutorials it is asked to open the TCP Port 7777, do not do it. Unreal Engine doesn't use TCP connections - you would be leaving an unused port open by doing so!</Warning>
+    <Warning>**Warning:** In other tutorials it is asked to open the TCP Port, do not do it. Unreal Engine doesn't use TCP connections.</Warning>
+
+    <Info>If you are opening multiple servers on the same network, configure firewall accordingly.</Info>
 
     1. Open Windows Defender Firewall with Advanced Security
     2. Create new Inbound Rules for the following:
        - UDP port 7777
-       - TCP and UDP ports 27015 and 27016
 
     <Frame caption="Open Windows firewall">
       <img src="https://user-images.githubusercontent.com/3257540/158257002-fdd91104-b661-46f8-90de-a07c0d724c91.png" />
