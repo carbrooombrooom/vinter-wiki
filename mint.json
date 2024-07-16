@@ -38,12 +38,7 @@
 			"name": "GitHub Repo",
 			"icon": "github",
 			"url": "https://github.com/uuvana-studios/vinter-wiki"
-		},
-    {
-        "name": "API References",
-        "icon": "code",
-        "url": "api-references"
-    }
+		}
 	],
   "navigation": [
     {
