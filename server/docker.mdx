@@ -80,23 +80,19 @@ icon: 'docker'
   </Step>
 
   <Step title="Configure Port-forwarding and Firewalls" icon="block-brick-fire">
-    <Warning>In other tutorials it is asked to open the TCP Port 7777, do not do it. Unreal Engine doesn't use TCP connections - you would be leaving a unused port open by doing so!</Warning>
+    <Warning>In other tutorials it is asked to open the TCP Port, do not do it. Unreal Engine doesn't use TCP connections.</Warning>
+
+    <Info>If you are opening multiple servers on the same network, configure firewall accordingly.</Info>
 
     <Tabs>
       <Tab title="IPTables">
         ```shell
         sudo iptables -I INPUT -p udp --dport 7777 -j ACCEPT
-        sudo iptables -I INPUT -p udp --dport 27016 -j ACCEPT
-        sudo iptables -I INPUT -p tcp --dport 27016 -j ACCEPT
-        sudo iptables -I INPUT -p udp --dport 27015 -j ACCEPT
-        sudo iptables -I INPUT -p tcp --dport 27015 -j ACCEPT
         ```
       </Tab>
       <Tab title="Uncomplicated Firewall (UFW)">
         ```shell
         sudo ufw allow 7777/udp
-        sudo ufw allow 27016
-        sudo ufw allow 27015
         ```
       </Tab>
     </Tabs>
