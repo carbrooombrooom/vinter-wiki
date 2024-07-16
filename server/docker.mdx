@@ -1,0 +1,174 @@
+---
+title: Docker Server Setup
+description: 'Guide for setting up a Longvinter server using Docker.'
+icon: 'docker'
+---
+
+<Note>If you have any trouble following this guide, please send us a message on [Discord](https://discord.gg/longvinter). We are more than happy to help you out!</Note>
+
+## Requirements and Pre-requisites
+
+- GIT installed in your system
+- GIT LFS installed in your system
+- Docker and Docker-Compose installed in your system
+- Min. 2 GB RAM
+- Min. 64-bit Linux Operating System
+- Broadband internet connection
+- Router with the ability to port forward
+
+<Warning>Some ISPs might not allow you to port forward. In such case, we recommend you to purchase VPS / Dedicated Server services.</Warning>
+
+## Setting up the Server
+
+<Steps>
+  <Step title="System Setup" icon="gear">
+    ### Installing GIT and GIT Large file system
+
+    <Tabs>
+      <Tab title="Ubuntu/Debian">
+        ```shell
+        sudo apt update
+        sudo apt install git git-lfs
+        ```
+      </Tab>
+      <Tab title="Arch-Linux">
+        ```shell
+        sudo pacman -Sy
+        sudo pacman -S git git-lfs
+        ```
+      </Tab>
+      <Tab title="Fedora">
+        ```shell
+        sudo yum update
+        sudo yum install git git-lfs
+        ```
+      </Tab>
+    </Tabs>
+
+    ### Installing Docker
+
+    <Tabs>
+      <Tab title="Ubuntu/Debian">
+        ```shell
+        sudo apt-get install apt-transport-https ca-certificates curl gnupg lsb-release
+        curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+        echo "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+        sudo apt-get install docker-ce docker-ce-cli containerd.io
+        sudo systemctl start docker && sudo systemctl enable docker
+        sudo usermod -aG docker $USER
+        newgrp docker
+        ```
+      </Tab>
+      <Tab title="Fedora">
+        ```shell
+        sudo dnf -y install yum-utils device-mapper-persistent-data lvm2 dnf-plugins-core
+        sudo dnf config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo
+        sudo dnf install docker-ce docker-ce-cli containerd.io
+        sudo systemctl start docker && sudo systemctl enable docker
+        sudo usermod -aG docker $USER
+        newgrp docker
+        ```
+      </Tab>
+      <Tab title="Arch Linux">
+        ```shell
+        sudo paru -S --noconfirm --needed docker
+        sudo usermod -aG docker $USER
+        newgrp docker
+        ```
+      </Tab>
+    </Tabs>
+  </Step>
+
+  <Step title="Configure Port-forwarding and Firewalls" icon="block-brick-fire">
+    <Warning>In other tutorials it is asked to open the TCP Port 7777, do not do it. Unreal Engine doesn't use TCP connections - you would be leaving a unused port open by doing so!</Warning>
+
+    <Tabs>
+      <Tab title="IPTables">
+        ```shell
+        sudo iptables -I INPUT -p udp --dport 7777 -j ACCEPT
+        sudo iptables -I INPUT -p udp --dport 27016 -j ACCEPT
+        sudo iptables -I INPUT -p tcp --dport 27016 -j ACCEPT
+        sudo iptables -I INPUT -p udp --dport 27015 -j ACCEPT
+        sudo iptables -I INPUT -p tcp --dport 27015 -j ACCEPT
+        ```
+      </Tab>
+      <Tab title="Uncomplicated Firewall (UFW)">
+        ```shell
+        sudo ufw allow 7777/udp
+        sudo ufw allow 27016
+        sudo ufw allow 27015
+        ```
+      </Tab>
+    </Tabs>
+  </Step>
+
+  <Step title="Setting up the container" icon="docker">
+    ### Downloading the container
+    ```shell
+    git clone https://github.com/Uuvana-Studios/longvinter-docker-server.git
+    ```
+
+    ### Creating the data directory
+    ```shell
+    mkdir data
+    chown -R 1200:1200 data/
+    ```
+
+    ### Configuring the server settings
+    Edit the `docker-compose.yaml` file to configure your server settings.
+
+    <Card title="Configuration" icon="gear" href="/server/configuration">
+      Check our configuration page for detailed information.
+    </Card>
+  </Step>
+
+  <Step title="Starting the container" icon="play">
+    ```shell
+    docker-compose up -d
+    ```
+  </Step>
+
+  <Step title="Server Maintenance" icon="traffic-cone">
+    <Tabs>
+      <Tab title="Stopping the container">
+        ```shell
+        docker-compose down
+        ```
+      </Tab>
+      <Tab title="Updating the container">
+        ```shell
+        git pull
+        docker-compose up -d --build
+        ```
+      </Tab>
+      <Tab title="Updating the Longvinter server">
+        ```shell
+        docker-compose restart
+        ```
+      </Tab>
+    </Tabs>
+  </Step>
+</Steps>
+
+## Running multiple Longvinter containers
+
+To run multiple Longvinter containers on one Docker server, follow the _Setting up the container_ steps again, but use a different directory for each new server:
+
+```shell
+git clone https://github.com/Uuvana-Studios/longvinter-docker-server.git new-name-here
+```
+
+<Warning>Remember to change the server ports for each new container. However, note that changing ports is currently not officially supported by the game.</Warning>
+
+## Getting Help
+
+<CardGroup cols={2}>
+  <Card title="FAQ" icon="question" href="/server/faq">
+    Check our server FAQ page to find solutions for common issues.
+  </Card>
+  <Card title="Discord" icon="discord" href="https://discord.gg/longvinter">
+    Ask questions in our #dedicated-server-help channel located in our Discord server.
+  </Card>
+</CardGroup>
+
+<Tip>If you encounter any errors in this guide, please contact us on the [Longvinter Discord](https://discord.gg/longvinter).</Tip>
